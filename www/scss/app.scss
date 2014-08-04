@@ -3,3 +3,56 @@
 @import "ionic/ionic";
 
 //Your styling and imports
+.messaging-view {
+  .scroll {
+    min-height:100%; background:#EEE; padding:10px 0 50px;
+  }
+  .message {
+    padding:0 10px 10px;
+    .photo {
+      height:44px;
+      width:44px;
+      background-color:#D6D6D6;
+      background-size:cover;
+      float:left;
+      @include border-radius(50%);
+    }
+    .message {
+      overflow:hidden;
+      padding:5px 5px 0;
+      text-align:left;
+      span { background:#FFF;
+        padding:10px;
+        display:inline-block;
+        // @include border-radiuses(0, 3px, 3px, 3px);
+        text-align:left;
+      }
+    }
+    &.other {
+      .photo {
+        float:right;
+      }
+      .message {
+        text-align:right;
+        span {
+          // @include border-radiuses(3px, 0, 3px, 3px);
+        }
+      }
+    }
+  }
+  .message-input {
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    height:50px;
+    background:#FFF;
+    z-index:20;
+    input {
+      width:100%;
+      background:none;
+      // @include border-box;
+      padding:0 15px;
+    }
+  }
+}

@@ -1,0 +1,16 @@
+<ion-view title="Messages">
+  <ion-nav-buttons side="right">
+    <button menu-toggle="right"class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+    <div class="list">
+      <a class="item item-avatar item-icon-right" ng-href="#/app/message/{{ message.id }}" ng-repeat="message in messages">
+        <img src="http://johnkellycode.com/assets/john_kelly.png">
+        <h2>{{ message.user.name }}</h2>
+        <p>{{ message.body }}</p>
+        <i class="icon ion-ios7-arrow-right"></i>
+      </a>
+    </div>
+  </ion-content>
+  <div ng-include="'templates/tabs.html'"></div>
+</ion-view>

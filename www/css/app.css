@@ -8306,3 +8306,44 @@ a.button {
 .platform-c:not(.enable-transitions) * {
   -webkit-transition: none !important;
   transition: none !important; }
+
+.messaging-view .scroll {
+  min-height: 100%;
+  background: #EEE;
+  padding: 10px 0 50px; }
+.messaging-view .message {
+  padding: 0 10px 10px; }
+  .messaging-view .message .photo {
+    height: 44px;
+    width: 44px;
+    background-color: #D6D6D6;
+    background-size: cover;
+    float: left;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%; }
+  .messaging-view .message .message {
+    overflow: hidden;
+    padding: 5px 5px 0;
+    text-align: left; }
+    .messaging-view .message .message span {
+      background: #FFF;
+      padding: 10px;
+      display: inline-block;
+      text-align: left; }
+  .messaging-view .message.other .photo {
+    float: right; }
+  .messaging-view .message.other .message {
+    text-align: right; }
+.messaging-view .message-input {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background: #FFF;
+  z-index: 20; }
+  .messaging-view .message-input input {
+    width: 100%;
+    background: none;
+    padding: 0 15px; }

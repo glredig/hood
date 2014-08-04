@@ -1,6 +1,6 @@
 // Ionic Starter App
 
-var app = angular.module('hood', ['ionic'])
+var app = angular.module('hood', ['ionic']);
 
 app.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -13,8 +13,11 @@ app.run(function($ionicPlatform) {
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+    if(window.cordova){
+      cordova.plugins && cordova.plugins.Keyboard && cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+    }
   });
-})
+});
 
 app.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
@@ -24,6 +27,26 @@ app.config(function($stateProvider, $urlRouterProvider) {
       abstract: true,
       templateUrl: "templates/menu.html",
       controller: 'AppCtrl'
+    })
+
+    .state('app.messages', {
+      url: "/messages",
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/messages.html",
+          controller: 'MessagesCtrl'
+        }
+      }
+    })
+
+    .state('app.message', {
+      url: "/message/:id",
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/message.html",
+          controller: 'MessageCtrl'
+        }
+      }
     })
 
     .state('app.search', {

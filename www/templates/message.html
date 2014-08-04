@@ -1,0 +1,14 @@
+<ion-view title="Message" class="messaging-view">
+  <ion-nav-buttons side="right">
+    <button menu-toggle="right"class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-content class="has-header" ng-style='{ bottom: data.keyboardHeight + "px" }'>
+    <div class="message" title="Messages" ng-repeat="message in messages" ng-class='{ other: message.userId != myId }'>
+      <div class="photo" ng-style='{ backgroundImage: "url(" + message.photo + ")" }'></div>
+      <div class="message" ><span>{{ message.text }}</span></div>
+    </div>
+  <div class="message-input">
+    <input type='text' placeholder='Type your message' on-return='sendMessage()' ng-model='data.message' on-focus='inputUp()' on-blur='inputDown()' />
+  </div>
+  </ion-content>
+</ion-view>
