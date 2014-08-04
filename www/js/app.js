@@ -66,6 +66,26 @@ app.config(function($stateProvider, $urlRouterProvider) {
         }
       }
     })
+    .state('app.performers', {
+      url: "/performers",
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/performers.html",
+          controller: 'PerformersCtrl'
+        }
+      }
+    })
+
+    .state('app.performer', {
+      url: "/performers/:performerId",
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/performer.html",
+          controller: 'PerformerCtrl'
+        }
+      }
+    })
+
     .state('app.playlists', {
       url: "/playlists",
       views: {
@@ -86,5 +106,5 @@ app.config(function($stateProvider, $urlRouterProvider) {
       }
     });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/playlists');
+  $urlRouterProvider.otherwise('/app/performers');
 });

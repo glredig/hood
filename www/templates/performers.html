@@ -1,0 +1,14 @@
+<ion-view title="Performers">
+  <ion-nav-buttons side="right">
+    <button menu-toggle="right" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+
+  <ion-content class="has-header">
+    <ion-list>
+      <ion-item ng-repeat="performer in performers" href="#/app/performers/{{performer.id}}">
+        {{performer.name}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+  <div ng-include="'templates/tabs.html'"></div>
+</ion-view>
