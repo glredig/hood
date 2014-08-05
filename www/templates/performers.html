@@ -4,11 +4,7 @@
   </ion-nav-buttons>
 
   <ion-content class="has-header">
-    <ion-list>
-      <ion-item ng-repeat="performer in performers" href="#/app/performers/{{performer.id}}">
-        {{performer.name}}
-      </ion-item>
-    </ion-list>
+    <leaflet center="center"></leaflet>
   </ion-content>
   <div ng-include="'templates/tabs.html'"></div>
 </ion-view>

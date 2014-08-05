@@ -8347,3 +8347,7 @@ a.button {
     width: 100%;
     background: none;
     padding: 0 15px; }
+
+.scroll, .angular-leaflet-map {
+  height: 100%;
+}    

@@ -1,6 +1,6 @@
 // Ionic Starter App
 
-var app = angular.module('hood', ['ionic']);
+var app = angular.module('hood', ['ionic', 'leaflet-directive']);
 
 app.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
