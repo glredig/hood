@@ -1,8 +1,9 @@
-// Ionic Starter App
+var app = angular.module('hood', ['ionic', 'openfb', 'leaflet-directive']);
 
-var app = angular.module('hood', ['ionic', 'leaflet-directive']);
+app.run(function ($rootScope, $state, $ionicPlatform, $window, OpenFB) {
 
-app.run(function($ionicPlatform) {
+  OpenFB.init('1449005538698348');
+
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -17,16 +18,48 @@ app.run(function($ionicPlatform) {
       cordova.plugins && cordova.plugins.Keyboard && cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
     }
   });
+
+  $rootScope.$on('$stateChangeStart', function(event, toState) {
+    if (toState.name !== "app.login" && toState.name !== "app.logout" && !$window.sessionStorage['fbtoken']) {
+      $state.go('app.login');
+      event.preventDefault();
+    }
+  });
+
+  $rootScope.$on('OAuthException', function() {
+    $state.go('app.login');
+  });
+
 });
 
-app.config(function($stateProvider, $urlRouterProvider) {
+app.config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider
 
     .state('app', {
-      url: "/app",
-      abstract: true,
-      templateUrl: "templates/menu.html",
-      controller: 'AppCtrl'
+        url: "/app",
+        abstract: true,
+        templateUrl: "templates/menu.html",
+        controller: "AppCtrl"
+    })
+
+    .state('app.login', {
+        url: "/login",
+        views: {
+            'menuContent': {
+                templateUrl: "templates/login.html",
+                controller: "LoginCtrl"
+            }
+        }
+    })
+
+    .state('app.logout', {
+        url: "/logout",
+        views: {
+            'menuContent': {
+                templateUrl: "templates/logout.html",
+                controller: "LogoutCtrl"
+            }
+        }
     })
 
     .state('app.messages', {
@@ -49,23 +82,6 @@ app.config(function($stateProvider, $urlRouterProvider) {
       }
     })
 
-    .state('app.search', {
-      url: "/search",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/search.html"
-        }
-      }
-    })
-
-    .state('app.browse', {
-      url: "/browse",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/browse.html"
-        }
-      }
-    })
     .state('app.performers', {
       url: "/performers",
       views: {
@@ -84,27 +100,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
           controller: 'PerformerCtrl'
         }
       }
-    })
-
-    .state('app.playlists', {
-      url: "/playlists",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/playlists.html",
-          controller: 'PlaylistsCtrl'
-        }
-      }
-    })
-
-    .state('app.single', {
-      url: "/playlists/:playlistId",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/playlist.html",
-          controller: 'PlaylistCtrl'
-        }
-      }
     });
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/performers');
+  // fallback route
+  $urlRouterProvider.otherwise('/app/login');
 });
