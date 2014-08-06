@@ -1,6 +1,6 @@
-var app = angular.module('hood', ['ionic', 'openfb', 'leaflet-directive']);
+var app = angular.module('hood', ['ionic', 'openfb', 'leaflet-directive', 'LocalStorageModule']);
 
-app.run(function ($rootScope, $state, $ionicPlatform, $window, OpenFB) {
+app.run(function ($rootScope, $state, $ionicPlatform, $window, OpenFB, CurrentUser) {
 
   OpenFB.init('1449005538698348');
 
@@ -20,9 +20,11 @@ app.run(function ($rootScope, $state, $ionicPlatform, $window, OpenFB) {
   });
 
   $rootScope.$on('$stateChangeStart', function(event, toState) {
-    if (toState.name !== "app.login" && toState.name !== "app.logout" && !$window.sessionStorage['fbtoken']) {
-      $state.go('app.login');
-      event.preventDefault();
+    if(toState.data && toState.data.requiresLogin){
+      if(!CurrentUser.isAuthenticated()) {
+        event.preventDefault();
+        $state.go('app.login');
+      }
     }
   });
 
@@ -49,6 +51,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 templateUrl: "templates/login.html",
                 controller: "LoginCtrl"
             }
+        },
+        data: {
+          requiresLogin: false
         }
     })
 
@@ -59,6 +64,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                 templateUrl: "templates/logout.html",
                 controller: "LogoutCtrl"
             }
+        },
+        data: {
+          requiresLogin: true
         }
     })
 
@@ -69,6 +77,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
           templateUrl: "templates/messages.html",
           controller: 'MessagesCtrl'
         }
+      },
+      data: {
+        requiresLogin: true
       }
     })
 
@@ -79,6 +90,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
           templateUrl: "templates/message.html",
           controller: 'MessageCtrl'
         }
+      },
+      data: {
+        requiresLogin: true
       }
     })
 
@@ -89,6 +103,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
           templateUrl: "templates/performers.html",
           controller: 'PerformersCtrl'
         }
+      },
+      data: {
+        requiresLogin: true
       }
     })
 
@@ -99,6 +116,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
           templateUrl: "templates/performer.html",
           controller: 'PerformerCtrl'
         }
+      },
+      data: {
+        requiresLogin: true
       }
     });
   // fallback route
