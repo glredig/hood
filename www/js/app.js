@@ -1,4 +1,4 @@
-var app = angular.module('hood', ['ionic', 'openfb', 'leaflet-directive', 'LocalStorageModule']);
+var app = angular.module('hood', ['ionic', 'ngResource', 'openfb', 'leaflet-directive', 'LocalStorageModule']);
 
 app.run(function ($rootScope, $state, $ionicPlatform, $window, OpenFB, CurrentUser) {
 
@@ -26,6 +26,12 @@ app.run(function ($rootScope, $state, $ionicPlatform, $window, OpenFB, CurrentUs
         $state.go('app.login');
       }
     }
+    if(toState.data && toState.data.requiresLogin == false){
+      if(CurrentUser.isAuthenticated()) {
+        event.preventDefault();
+        $state.go('app.performers');
+      }
+    }
   });
 
   $rootScope.$on('OAuthException', function() {
@@ -33,6 +39,9 @@ app.run(function ($rootScope, $state, $ionicPlatform, $window, OpenFB, CurrentUs
   });
 
 });
+
+app.constant('Host', 'http://localhost:5000');
+// app.constant('Host', 'https://mckinley.herokuapp.com');
 
 app.config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider
