@@ -1,7 +1,6 @@
-app.controller('AppCtrl', function($scope, $state, OpenFB) {
+app.controller('AppCtrl', function($scope, $state, CurrentUser) {
   $scope.logout = function () {
-    OpenFB.logout();
-    $state.go('app.login');
+    CurrentUser.sign_out();
   };
 
   $scope.revokePermissions = function () {

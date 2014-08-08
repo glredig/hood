@@ -1,4 +1,4 @@
-app.service('CurrentUser', function(localStorageService) {
+app.service('CurrentUser', function(localStorageService, OpenFB) {
 
   this.store = function(current_user){
     localStorageService.add('hood_token', current_user.auth_token);
@@ -59,8 +59,10 @@ app.service('CurrentUser', function(localStorageService) {
     return ( this.hood_token() !== null && this.id() !== null && this.hood_token().length !== 0 && this.id().length !== 0);
   };
 
-  this.sign_out = function(){
+  this.sign_out = function(session_storage){
+    window.sessionStorage.removeItem('fbtoken');
     this.delete_all();
+    OpenFB.logout();
     location.reload();
   };
 });
