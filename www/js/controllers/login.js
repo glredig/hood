@@ -1,24 +1,24 @@
-app.controller('LoginCtrl', function ($scope, $state, OpenFB, Facebook, CurrentUser) {
+app.controller('LoginCtrl', function ($scope, $state, OpenFB, Facebook, CurrentUser, Helpers) {
 
   $scope.facebookLogin = function () {
+    Helpers.show_loading();
     OpenFB.login('email,user_birthday').then(
       function (response) {
         Facebook.save(
           { facebook: { token: window.sessionStorage.fbtoken }},
           function(response) {
-            // console.log(response);
             var user_json = response.current_user;
             CurrentUser.store(user_json);
+            Helpers.hide_loading();
             $state.go('app.performers');
           },
           function(response) {
-            // console.log(response);
-            // Helpers.ajax_error_handling(response);
+            Helpers.ajax_error_handling(response);
           }
         );
       },
       function () {
-        alert('OpenFB login failed');
+        Helpers.showAlert('Could not login to Facebook. Please try again later.');
       });
   };
 });
