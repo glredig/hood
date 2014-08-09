@@ -14,6 +14,7 @@ app.controller('LoginCtrl', function ($scope, $state, OpenFB, Facebook, CurrentU
           },
           function(response) {
             Helpers.ajax_error_handling(response);
+            OpenFB.revokePermissions(null, null);
           }
         );
       },
