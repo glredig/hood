@@ -1,12 +1,25 @@
 <ion-view title="Performer" ng-model="performer">
   <ion-content class="has-header">
-    <h1>{{performer.name}}</h1>
-    <h3>{{performer.tagline}}</h3>
-    <h2>Check in</h2>
-    <h2>Make Request</h2>
-    <h2>Playlist</h2>
-    <h2>Message</h2>
-    <h2>History</h2>
+    <img class="performer_profile_image" src="{{performer.image}}" />
+    <h1 class="performer_name">{{performer.name}}</h1>
+    <h3 class="performer_tagline">{{performer.tagline}}</h3>
+    <ion-list class="performer_page_list">
+      <ion-item>
+        Check in
+      </ion-item>
+      <ion-item>
+        Request a song
+      </ion-item>
+      <ion-item>
+        Now playing
+      </ion-item>
+      <ion-item>
+        Message
+      </ion-item>
+      <ion-item>
+        Past events
+      </ion-item>
+    </ion-list>
   </ion-content>
   <div ng-include="'templates/tabs.html'"></div>
 </ion-view>

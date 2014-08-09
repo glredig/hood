@@ -1,0 +1,26 @@
+.performer_profile_image {
+  border-radius: 50%;
+  margin: 20px auto 10px;
+  height: 150px;
+  width: 150px;
+  display: block;
+}
+
+.performer_name {
+  text-align: center;
+}
+
+.performer_tagline {
+  text-align: center;
+  font-size: 1em;
+  color: #777777;
+}
+
+.performer_page_list ion-item {
+  font-size: 1.8em;
+  line-height: 2.1em;
+}
+
+.performer_page_list ion-item:active {
+  background-color: #eeeeee;
+}

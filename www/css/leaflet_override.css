@@ -1,0 +1,19 @@
+.leaflet-popup-content {
+  padding-left: 0;
+  line-height: 3em !important;
+  margin-left: 5px !important;
+  width: 150px !important;
+}
+
+.leaflet-popup-content img {
+  border-radius: 50%;
+  height: 3em;
+  width: 3em;
+  float: left;
+  margin-right: .4em;
+}
+
+.leaflet-popup-content a:after {
+  content: "";
+  clear: both;
+}
