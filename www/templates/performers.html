@@ -1,10 +1,9 @@
 <ion-view title="Performers">
-  <ion-nav-buttons side="right">
-    <button menu-toggle="right" class="button button-icon icon ion-navicon"></button>
-  </ion-nav-buttons>
+  <div ng-include="'templates/nav.html'"></div>
 
   <ion-content class="has-header">
     <leaflet center="center" markers="markers"></leaflet>
   </ion-content>
+
   <div ng-include="'templates/tabs.html'"></div>
 </ion-view>

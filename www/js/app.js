@@ -1,8 +1,9 @@
-// Ionic Starter App
+var app = angular.module('hood', ['ionic', 'ngResource', 'openfb', 'leaflet-directive', 'LocalStorageModule']);
 
-var app = angular.module('hood', ['ionic', 'leaflet-directive']);
+app.run(function ($rootScope, $state, $ionicPlatform, $window, OpenFB, CurrentUser) {
 
-app.run(function($ionicPlatform) {
+  OpenFB.init('1449005538698348');
+
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -17,16 +18,65 @@ app.run(function($ionicPlatform) {
       cordova.plugins && cordova.plugins.Keyboard && cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
     }
   });
+
+  $rootScope.$on('$stateChangeStart', function(event, toState) {
+    if(toState.data && toState.data.requiresLogin){
+      if(!CurrentUser.isAuthenticated()) {
+        event.preventDefault();
+        $state.go('app.login');
+      }
+    }
+    if(toState.data && toState.data.requiresLogin == false){
+      if(CurrentUser.isAuthenticated()) {
+        event.preventDefault();
+        $state.go('app.performers');
+      }
+    }
+  });
+
+  $rootScope.$on('OAuthException', function() {
+    $state.go('app.login');
+  });
+
 });
 
-app.config(function($stateProvider, $urlRouterProvider) {
+// app.constant('Host', 'http://localhost:5000');
+app.constant('Host', 'https://mckinley.herokuapp.com');
+
+app.config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider
 
     .state('app', {
-      url: "/app",
-      abstract: true,
-      templateUrl: "templates/menu.html",
-      controller: 'AppCtrl'
+        url: "/app",
+        abstract: true,
+        templateUrl: "templates/menu.html",
+        controller: "AppCtrl"
+    })
+
+    .state('app.login', {
+        url: "/login",
+        views: {
+            'menuContent': {
+                templateUrl: "templates/login.html",
+                controller: "LoginCtrl"
+            }
+        },
+        data: {
+          requiresLogin: false
+        }
+    })
+
+    .state('app.logout', {
+        url: "/logout",
+        views: {
+            'menuContent': {
+                templateUrl: "templates/logout.html",
+                controller: "LogoutCtrl"
+            }
+        },
+        data: {
+          requiresLogin: true
+        }
     })
 
     .state('app.messages', {
@@ -36,6 +86,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
           templateUrl: "templates/messages.html",
           controller: 'MessagesCtrl'
         }
+      },
+      data: {
+        requiresLogin: true
       }
     })
 
@@ -46,26 +99,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
           templateUrl: "templates/message.html",
           controller: 'MessageCtrl'
         }
+      },
+      data: {
+        requiresLogin: true
       }
     })
 
-    .state('app.search', {
-      url: "/search",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/search.html"
-        }
-      }
-    })
-
-    .state('app.browse', {
-      url: "/browse",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/browse.html"
-        }
-      }
-    })
     .state('app.performers', {
       url: "/performers",
       views: {
@@ -73,6 +112,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
           templateUrl: "templates/performers.html",
           controller: 'PerformersCtrl'
         }
+      },
+      data: {
+        requiresLogin: true
       }
     })
 
@@ -83,28 +125,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
           templateUrl: "templates/performer.html",
           controller: 'PerformerCtrl'
         }
-      }
-    })
-
-    .state('app.playlists', {
-      url: "/playlists",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/playlists.html",
-          controller: 'PlaylistsCtrl'
-        }
-      }
-    })
-
-    .state('app.single', {
-      url: "/playlists/:playlistId",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/playlist.html",
-          controller: 'PlaylistCtrl'
-        }
+      },
+      data: {
+        requiresLogin: true
       }
     });
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/performers');
+  // fallback route
+  $urlRouterProvider.otherwise('/app/login');
 });
