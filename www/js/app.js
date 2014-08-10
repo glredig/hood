@@ -40,8 +40,8 @@ app.run(function ($rootScope, $state, $ionicPlatform, $window, OpenFB, CurrentUs
 
 });
 
-app.constant('Host', 'http://localhost:5000');
-// app.constant('Host', 'https://mckinley.herokuapp.com');
+// app.constant('Host', 'http://localhost:5000');
+app.constant('Host', 'https://mckinley.herokuapp.com');
 
 app.config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider
